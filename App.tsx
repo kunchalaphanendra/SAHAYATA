@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { TRANSLATIONS } from './constants';
 import { LanguageCode, UserProfile } from './types';
-import Home from './pages/Home';
 import Discovery from './pages/Discovery';
 import Results from './pages/Results';
 import SchemeDetail from './pages/SchemeDetail';
@@ -96,7 +95,7 @@ const App: React.FC = () => {
 
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home t={t} />} />
+            <Route path="/" element={<Discovery setUserProfile={setUserProfile} lang={lang} />} />
             <Route path="/discovery" element={<Discovery setUserProfile={setUserProfile} lang={lang} />} />
             <Route path="/results" element={<Results profile={userProfile} lang={lang} />} />
             <Route path="/scheme/:id" element={<SchemeDetail lang={lang} />} />
