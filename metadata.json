@@ -1,0 +1,8 @@
+
+{
+  "name": "Sahayata - Citizen Scheme Portal",
+  "description": "A comprehensive, accessible platform for discovering and enrolling in government welfare schemes with AI-powered assistance.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
