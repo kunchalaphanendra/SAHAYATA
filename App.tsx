@@ -10,7 +10,7 @@ import SchemeDetail from './pages/SchemeDetail';
 import Dashboard from './pages/Dashboard';
 import ApplyScheme from './pages/ApplyScheme';
 import { motion, AnimatePresence } from 'framer-motion';
-import ChatBot from './components/ChatBot';
+import ChatBot from './components/Chatbot';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<LanguageCode>('en');
