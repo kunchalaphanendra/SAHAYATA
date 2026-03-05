@@ -133,8 +133,13 @@ const SchemeDetail: React.FC<SchemeDetailProps> = ({ lang }) => {
                 ))}
              </div>
              <div className="mt-12 flex flex-col sm:flex-row gap-4">
-                <a href={scheme.officialLink} target="_blank" className="flex-grow py-5 bg-slate-900 text-white text-center font-black text-lg rounded-3xl shadow-xl transition-all hover:bg-black">Apply on Official Site</a>
-                <button className="px-10 py-5 bg-white border-2 border-slate-100 text-slate-900 font-black text-lg rounded-3xl hover:bg-slate-50 transition-all">Download Guide (PDF)</button>
+                <button 
+                  onClick={() => navigate(`/apply/${scheme.id}`)}
+                  className="flex-grow py-5 bg-indigo-600 text-white text-center font-black text-lg rounded-3xl shadow-2xl shadow-indigo-100 transition-all hover:scale-105"
+                >
+                  Apply via Sahayata
+                </button>
+                <a href={scheme.officialLink} target="_blank" className="flex-grow py-5 bg-slate-900 text-white text-center font-black text-lg rounded-3xl shadow-xl transition-all hover:bg-black">Official Portal</a>
              </div>
           </div>
         </div>
