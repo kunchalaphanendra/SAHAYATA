@@ -2,19 +2,26 @@
 import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { TRANSLATIONS } from './constants';
-import { LanguageCode, UserProfile } from './types';
+import { LanguageCode, UserProfile, Application } from './types';
 import Home from './pages/Home';
 import Discovery from './pages/Discovery';
 import Results from './pages/Results';
 import SchemeDetail from './pages/SchemeDetail';
 import Dashboard from './pages/Dashboard';
+import ApplyScheme from './pages/ApplyScheme';
 import { motion, AnimatePresence } from 'framer-motion';
+import ChatBot from './components/ChatBot';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<LanguageCode>('en');
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [applications, setApplications] = useState<Application[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const t = TRANSLATIONS[lang];
+
+  const handleApply = (app: Application) => {
+    setApplications(prev => [app, ...prev]);
+  };
 
   const mockAlerts = [
     { id: 1, title: 'PM-JAY Update', msg: 'New empanelled hospitals added in your district.', date: '2h ago' },
@@ -100,9 +107,12 @@ const App: React.FC = () => {
             <Route path="/discovery" element={<Discovery setUserProfile={setUserProfile} lang={lang} />} />
             <Route path="/results" element={<Results profile={userProfile} lang={lang} />} />
             <Route path="/scheme/:id" element={<SchemeDetail lang={lang} />} />
-            <Route path="/dashboard" element={<Dashboard profile={userProfile} setProfile={setUserProfile} lang={lang} />} />
+            <Route path="/apply/:id" element={<ApplyScheme profile={userProfile} lang={lang} onApply={handleApply} />} />
+            <Route path="/dashboard" element={<Dashboard profile={userProfile} setProfile={setUserProfile} lang={lang} applications={applications} />} />
           </Routes>
         </main>
+
+        <ChatBot />
 
         <footer className="py-12 px-4 border-t border-slate-100 bg-white">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
