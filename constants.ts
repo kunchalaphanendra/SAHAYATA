@@ -72,6 +72,18 @@ export const SCHEMES: Scheme[] = [
     steps: ['Apply to State Nodal Agency', 'Survey of farm'],
     officialLink: 'https://mnre.gov.in/'
   },
+  {
+    id: '13',
+    name: 'PM Matsya Sampada Yojana',
+    category: 'Agriculture',
+    description: 'Financial assistance for fish farmers and boat owners.',
+    benefits: ['Insurance for fishing boats', 'Subsidy for fish ponds'],
+    occupation: 'Farmer',
+    maxIncome: 500000,
+    documents: ['Fishing License', 'Aadhar'],
+    steps: ['Apply at District Fisheries Office', 'On-site verification'],
+    officialLink: 'https://dof.gov.in/pmmsy'
+  },
 
   // --- EMPLOYMENT & SKILLS ---
   {
@@ -216,18 +228,44 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     checkEligibility: 'Find My Schemes',
     heroDesc: 'Your personal AI-powered portal to discover, understand, and enroll in government welfare programs.',
     languageName: 'English',
-    footerRights: '© 2024 Sahayata Portal. Digital Empowerment for Every Citizen.'
+    footerRights: '© 2024 Sahayata Portal. Digital Empowerment for Every Citizen.',
+    applyNow: 'Apply Now',
+    myApplications: 'My Applications',
+    findCSC: 'Find Help Center'
   },
   hi: {
     title: 'सहायता',
-    subtitle: 'नागरिक कल्याण सेवा',
+    subtitle: 'नागरிக் कल्याण सेवा',
     checkEligibility: 'योजनाएं खोजें',
     heroDesc: 'सरकारी कल्याण कार्यक्रमों की खोज, समझने और नामांकन करने के लिए आपका व्यक्तिगत पोर्टल।',
     languageName: 'हिन्दी',
-    footerRights: '© 2024 सहायता पोर्टल। हर नागरिक के لیے डिजिटल अधिकार।'
+    footerRights: '© 2024 सहायता पोर्टल। हर नागरिक के लिए डिजिटल अधिकार।',
+    applyNow: 'अभी आवेदन करें',
+    myApplications: 'मेरे आवेदन',
+    findCSC: 'सहायता केंद्र खोजें'
   },
-  te: { title: 'సహాయత', subtitle: 'ప్రభుత్వ పథకాల సేవ', checkEligibility: 'పథకాలను కనుగొనండి', heroDesc: 'ప్రభుత్వ సంక్షేమ పథకాలను కనుగొనడానికి మీ వ్యక్తిగత పోర్టల్.', languageName: 'తెలుగు', footerRights: '© 2024 సహాయత పోర్టల్.' },
-  ta: { title: 'சஹாயதா', subtitle: 'அரசு நலத்திட்ட சேவை', checkEligibility: 'திட்டங்களைக் கண்டறியவும்', heroDesc: 'அரசு நலத்திட்டங்களைக் கண்டறிவதற்கான உங்கள் தனிப்பட்ட போர்டல்.', languageName: 'தமிழ்', footerRights: '© 2024 சஹாயதா போர்டல்.' }
+  te: { 
+    title: 'సహాయత', 
+    subtitle: 'ప్రభుత్వ పథకాల సేవ', 
+    checkEligibility: 'పథకాలను కనుగొనండి', 
+    heroDesc: 'ప్రభుత్వ సంక్షేమ పథకాలను కనుగొనడానికి మీ వ్యక్తిగత పోర్టల్.', 
+    languageName: 'తెలుగు', 
+    footerRights: '© 2024 సహాయత పోర్టల్.',
+    applyNow: 'ఇప్పుడే దరఖాస్తు చేసుకోండి',
+    myApplications: 'నా దరఖాస్తులు',
+    findCSC: 'సహాయ కేంద్రాన్ని కనుగొనండి'
+  },
+  ta: { 
+    title: 'சஹாயதா', 
+    subtitle: 'அரசு நலத்திட்ட சேவை', 
+    checkEligibility: 'திட்டங்களைக் கண்டறியவும்', 
+    heroDesc: 'அரசு நலத்திட்டங்களைக் கண்டறிவதற்கான உங்கள் தனிப்பட்ட போர்டல்.', 
+    languageName: 'தமிழ்', 
+    footerRights: '© 2024 சஹாயதா போர்டல்.',
+    applyNow: 'இப்போதே விண்ணப்பிக்கவும்',
+    myApplications: 'எனது விண்ணப்பங்கள்',
+    findCSC: 'உதவி மையத்தைக் கண்டறியவும்'
+  }
 };
 
 export const STATES = [
@@ -237,4 +275,10 @@ export const STATES = [
   'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
   'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
   'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi'
+];
+
+export const MOCK_CSC = [
+  { id: 'csc1', name: 'Digital Seva Kendra - Central', address: '123, Main Market, New Delhi', lat: 28.6139, lng: 77.2090, contact: '011-23456789' },
+  { id: 'csc2', name: 'Gramin Sahayata Center', address: 'Village Panchayat Office, Sonipat', lat: 28.9931, lng: 77.0151, contact: '01264-223344' },
+  { id: 'csc3', name: 'Jan Seva Kendra - West', address: 'Plot 45, Sector 12, Dwarka', lat: 28.5823, lng: 77.0500, contact: '011-98765432' }
 ];
