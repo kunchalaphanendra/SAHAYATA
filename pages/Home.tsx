@@ -73,6 +73,39 @@ const Home: React.FC<HomeProps> = ({ t }) => {
           </div>
         </div>
       </section>
+
+      {/* Help Center Section */}
+      <section className="py-24 px-4 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+           <div className="flex-grow space-y-8">
+              <span className="px-6 py-2 bg-indigo-50 text-indigo-600 rounded-full text-xs font-black uppercase tracking-widest">Offline Support</span>
+              <h2 className="text-5xl font-black text-slate-900 leading-tight">Can't apply online? <br/><span className="text-indigo-600">We've got you covered.</span></h2>
+              <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-xl">
+                 Visit any of the 500,000+ Common Service Centres (CSCs) across India. Our portal helps you find the nearest one and tells you exactly what documents to carry.
+              </p>
+              <div className="flex gap-4">
+                 <button onClick={() => navigate('/dashboard')} className="px-10 py-5 bg-slate-900 text-white rounded-[2rem] font-black text-lg hover:scale-105 transition-all">Find Nearest CSC</button>
+                 <button className="px-10 py-5 bg-white border-2 border-slate-100 text-slate-900 rounded-[2rem] font-black text-lg hover:bg-slate-50 transition-all">How it works</button>
+              </div>
+           </div>
+           <div className="w-full md:w-1/2 grid grid-cols-2 gap-6">
+              <div className="p-8 bg-slate-50 rounded-[3rem] border border-slate-100 space-y-4">
+                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                 </div>
+                 <h4 className="font-black text-slate-900">CSC Locator</h4>
+                 <p className="text-sm text-slate-500 font-bold">Find centers in your village or city.</p>
+              </div>
+              <div className="p-8 bg-indigo-600 text-white rounded-[3rem] shadow-2xl space-y-4 translate-y-8">
+                 <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-white">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                 </div>
+                 <h4 className="font-black">Verified Centers</h4>
+                 <p className="text-sm text-indigo-100 font-bold">Only official government service points.</p>
+              </div>
+           </div>
+        </div>
+      </section>
     </div>
   );
 };
