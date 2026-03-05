@@ -30,6 +30,7 @@ export interface Scheme {
 }
 
 export interface UserProfile {
+  name: string;
   age: number;
   gender: Gender;
   state: string;
@@ -47,6 +48,24 @@ export interface UserProfile {
 
 export type LanguageCode = 'en' | 'hi' | 'te' | 'ta';
 
+export interface Application {
+  id: string;
+  schemeId: string;
+  schemeName: string;
+  status: 'Pending' | 'Approved' | 'Rejected' | 'In Review';
+  appliedDate: string;
+  documentsUploaded: string[];
+}
+
+export interface CSC {
+  id: string;
+  name: string;
+  address: string;
+  lat: number;
+  lng: number;
+  contact: string;
+}
+
 export interface Translation {
   title: string;
   subtitle: string;
@@ -54,4 +73,8 @@ export interface Translation {
   heroDesc: string;
   languageName: string;
   footerRights: string;
+  applyNow: string;
+  myApplications: string;
+  findCSC: string;
 }
+
