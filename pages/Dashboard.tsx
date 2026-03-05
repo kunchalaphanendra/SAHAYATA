@@ -1,19 +1,21 @@
 
 import React, { useState, useMemo } from 'react';
-import { UserProfile, LanguageCode, Category, Gender, MaritalStatus } from '../types';
-import { STATES, SCHEMES } from '../constants';
+import { UserProfile, LanguageCode, Category, Gender, MaritalStatus, Application } from '../types';
+import { STATES, SCHEMES, MOCK_CSC } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { MapPin, Phone, ExternalLink, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface DashboardProps {
   profile: UserProfile | null;
   setProfile: (p: UserProfile) => void;
   lang: LanguageCode;
+  applications: Application[];
 }
 
-type Tab = 'Applications' | 'Profile' | 'Saved' | 'Settings';
+type Tab = 'Applications' | 'Profile' | 'Help Centers' | 'Saved' | 'Settings';
 
-const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
+const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang, applications }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>('Applications');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -69,14 +71,15 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
   const navItems: { name: Tab; icon: string }[] = [
     { name: 'Applications', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10' },
     { name: 'Profile', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+    { name: 'Help Centers', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z' },
     { name: 'Saved', icon: 'M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z' },
     { name: 'Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
   ];
 
-  const dummyApplications = [
-    { name: 'Ayushman Bharat', date: 'May 12, 2024', status: 'In Review', id: 'AB-902' },
-    { name: 'PM Kisan Samman', date: 'Mar 20, 2024', status: 'Approved', id: 'KS-114' }
-  ];
+  const allApplications = [...applications, ...[
+    { schemeName: 'Ayushman Bharat', appliedDate: 'May 12, 2024', status: 'In Review' as const, id: 'AB-902', documentsUploaded: [] },
+    { schemeName: 'PM Kisan Samman', appliedDate: 'Mar 20, 2024', status: 'Approved' as const, id: 'KS-114', documentsUploaded: [] }
+  ]];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -86,9 +89,9 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
           <div className="bg-white p-10 rounded-[3.5rem] shadow-xl border border-slate-100 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-2 bg-indigo-600" />
             <div className="w-24 h-24 bg-indigo-50 text-indigo-600 rounded-[2.5rem] mx-auto mb-6 flex items-center justify-center text-4xl font-black shadow-inner">
-              {profile.occupation[0]}
+              {profile.name[0]}
             </div>
-            <h3 className="text-2xl font-black text-slate-900 leading-tight">My Citizen Profile</h3>
+            <h3 className="text-2xl font-black text-slate-900 leading-tight">{profile.name}</h3>
             <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">{profile.state} Resident</p>
             
             <div className="mt-8 pt-8 border-t border-slate-50 space-y-4">
@@ -126,20 +129,25 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
                   <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Live Updates</p>
                 </div>
                 <div className="space-y-6">
-                   {dummyApplications.map((app, i) => (
+                   {allApplications.map((app, i) => (
                       <div key={app.id} className="p-8 rounded-[3rem] bg-slate-50 border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group hover:bg-white hover:shadow-2xl transition-all">
                          <div className="flex items-center gap-6">
                             <div className="w-16 h-16 rounded-[1.5rem] bg-white border border-slate-100 flex items-center justify-center font-black text-xl shadow-sm text-indigo-600">
-                               {app.name[0]}
+                               {app.schemeName[0]}
                             </div>
                             <div>
-                               <h4 className="text-xl font-black text-slate-900">{app.name}</h4>
-                               <p className="text-xs font-bold text-slate-400 mt-1">Ref ID: {app.id} • Applied {app.date}</p>
+                               <h4 className="text-xl font-black text-slate-900">{app.schemeName}</h4>
+                               <p className="text-xs font-bold text-slate-400 mt-1">Ref ID: {app.id} • Applied {app.appliedDate}</p>
                             </div>
                          </div>
-                         <span className={`px-6 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest ${app.status === 'Approved' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
-                            {app.status}
-                         </span>
+                         <div className="flex items-center gap-4">
+                            <span className={`px-6 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest ${app.status === 'Approved' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
+                                {app.status}
+                            </span>
+                            <button className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-indigo-600 transition-all">
+                               <ExternalLink size={18} />
+                            </button>
+                         </div>
                       </div>
                    ))}
                 </div>
@@ -190,6 +198,10 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
                {isEditingProfile && editData ? (
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
+                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Full Name</label>
+                       <input type="text" name="name" value={editData.name} onChange={handleInputChange} className="w-full p-6 bg-slate-50 border-2 border-transparent focus:border-indigo-600 rounded-[2rem] outline-none font-black text-xl" />
+                    </div>
+                    <div className="space-y-4">
                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Full Age</label>
                        <input type="number" name="age" value={editData.age} onChange={handleInputChange} className="w-full p-6 bg-slate-50 border-2 border-transparent focus:border-indigo-600 rounded-[2rem] outline-none font-black text-xl" />
                     </div>
@@ -229,6 +241,7 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
                ) : (
                  <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                     {[
+                      { label: 'Full Name', val: profile.name },
                       { label: 'Age', val: `${profile.age} Years` },
                       { label: 'State', val: profile.state },
                       { label: 'Income', val: `₹${profile.income.toLocaleString()}/yr` },
@@ -249,6 +262,56 @@ const Dashboard: React.FC<DashboardProps> = ({ profile, setProfile, lang }) => {
             </div>
           )}
 
+          {activeTab === 'Help Centers' && (
+            <div className="space-y-12">
+               <div className="bg-white rounded-[4rem] p-12 shadow-sm border border-slate-100">
+                  <div className="flex justify-between items-end mb-10">
+                    <h2 className="text-4xl font-black text-slate-900 leading-tight">Nearby Help Centers</h2>
+                    <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">CSC Locator</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     {MOCK_CSC.map(csc => (
+                        <div key={csc.id} className="p-8 rounded-[3rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all group">
+                           <div className="flex items-start justify-between mb-6">
+                              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600">
+                                 <MapPin size={24} />
+                              </div>
+                              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-4 py-1 rounded-full">Open Now</span>
+                           </div>
+                           <h4 className="text-xl font-black text-slate-900 mb-2">{csc.name}</h4>
+                           <p className="text-sm text-slate-500 font-medium mb-6 leading-relaxed">{csc.address}</p>
+                           <div className="flex gap-4">
+                              <button className="flex-grow flex items-center justify-center gap-2 bg-slate-900 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all">
+                                 <Phone size={16} /> Call
+                              </button>
+                              <button className="flex-grow flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-900 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">
+                                 Directions
+                              </button>
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+
+               <div className="bg-indigo-600 text-white p-12 rounded-[4rem] shadow-2xl relative overflow-hidden">
+                  <div className="relative z-10">
+                     <h3 className="text-3xl font-black mb-4">Need Offline Help?</h3>
+                     <p className="text-indigo-100 font-bold text-lg max-w-xl mb-8">Visit your nearest Common Service Centre (CSC) for assistance with document scanning, application filing, and biometric verification.</p>
+                     <div className="flex items-center gap-8">
+                        <div className="flex items-center gap-3">
+                           <CheckCircle2 size={20} className="text-indigo-300" />
+                           <span className="font-black text-xs uppercase tracking-widest">Free Consultation</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                           <CheckCircle2 size={20} className="text-indigo-300" />
+                           <span className="font-black text-xs uppercase tracking-widest">Document Support</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
+               </div>
+            </div>
+          )}
           {activeTab === 'Saved' && (
             <div className="bg-white rounded-[4rem] p-24 text-center border-4 border-dashed border-slate-100">
                <h3 className="text-3xl font-black text-slate-900 mb-4">No Saved Schemes</h3>
